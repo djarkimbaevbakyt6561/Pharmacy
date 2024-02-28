@@ -4,7 +4,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import peaksoft.entities.Medicine;
+import peaksoft.entities.Pharmacy;
 import peaksoft.repository.MedicineRepository;
+import peaksoft.repository.PharmacyRepository;
 import peaksoft.service.MedicineService;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class MedicineServiceImpl implements MedicineService {
     private final MedicineRepository medicineRepository;
+    private final PharmacyRepository pharmacyRepository;
 
     @Override
     public String saveMedicine(Medicine medicine) {
@@ -70,4 +73,21 @@ public class MedicineServiceImpl implements MedicineService {
     public List<Medicine> searchMedicinesByName(String name) {
         return medicineRepository.searchMedicinesByName(name);
     }
+
+    @Override
+    @Transactional
+    public String addMedicineToPharmacy(Long medicineId, Long pharmacyId) {
+        Medicine medicine = medicineRepository.findById(medicineId)
+                .orElseThrow(() -> new NoSuchElementException("Medicine not found with id: " + medicineId));
+        Pharmacy pharmacy = pharmacyRepository.findById(pharmacyId)
+                .orElseThrow(() -> new NoSuchElementException("Pharmacy not found with id: " + pharmacyId));
+        if (medicine != null && pharmacy != null) {
+            pharmacy.getMedicines().add(medicine);
+            medicine.getPharmacies().add(pharmacy);
+            return "Medicine added to pharmacy successfully!";
+        } else {
+            return "Medicine or pharmacy not found!";
+        }
+    }
+
 }

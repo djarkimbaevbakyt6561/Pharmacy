@@ -21,7 +21,7 @@ public class Pharmacy {
     private Long id;
     private String name;
     private String address;
-    @ManyToMany(mappedBy = "pharmacies", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "pharmacies")
     private List<Medicine> medicines;
     @OneToMany(mappedBy = "pharmacy", cascade = CascadeType.REMOVE)
     private List<Worker> workers;

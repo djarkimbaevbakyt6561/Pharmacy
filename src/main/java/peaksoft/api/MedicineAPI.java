@@ -20,6 +20,10 @@ public class MedicineAPI {
     public String save(@RequestBody Medicine medicine) {
         return medicineService.saveMedicine(medicine);
     }
+    @PostMapping("/addMedicineToPharmacy")
+    public String addMedicineToPharmacy(@RequestParam("medicineId") Long medicineId, @RequestParam("pharmacyId") Long pharmacyId){
+        return medicineService.addMedicineToPharmacy(medicineId, pharmacyId);
+    }
 
     @PutMapping("/{medicineId}")
     public String update(@RequestBody Medicine medicine, @PathVariable Long medicineId) {

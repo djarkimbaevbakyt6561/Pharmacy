@@ -16,4 +16,6 @@ public interface MedicineService {
     List<Medicine> sortByName(String ascOrDesc);
 
     List<Medicine> searchMedicinesByName(String name);
+
+    String addMedicineToPharmacy(Long medicineId, Long pharmacyId);
 }
