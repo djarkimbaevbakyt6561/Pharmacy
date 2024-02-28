@@ -18,7 +18,7 @@ public interface PharmacyRepository extends JpaRepository<Pharmacy, Long> {
 
     List<Pharmacy> searchPharmaciesByName(String name);
 
-    @Query("SELECT ph FROM Pharmacy ph WHERE ph.workers.size = (SELECT MAX(p.workers.size) FROM Pharmacy p)")
+    @Query("SELECT p FROM Pharmacy p ORDER BY SIZE(p.workers) DESC")
     Pharmacy getPharmacyWithTheMostWorkers();
 
 }
